@@ -25,24 +25,27 @@ namespace api1_deambrogio
         public MainWindow()
         {
             InitializeComponent();
-
-        _:         GetWeather("Paris");
+            GetWeather("Paris");
         }
-
 
         public async Task<string> GetWeather(string city)
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync("https://api.openweathermap.org/data/2.5/weather?q="+city+",fr&appid=c21a75b667d6f7abb81f118dcf8d4611&units=metric");
+            HttpResponseMessage response = await client.GetAsync("https://api.openweathermap.org/data/2.5/weather?q=" + city + ",fr&appid=c21a75b667d6f7abb81f118dcf8d4611&units=metric");
+
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
                 Root weatherData = JsonConvert.DeserializeObject<Root>(content);
-                Température_max.Text = weatherData.main.temp.ToString() + " °C";
+
+                Température_actuelle.Text = weatherData.main.temp.ToString() + " °C";
+                Température_max.Text = weatherData.main.temp_max.ToString() + " °C";
                 Température_min.Text = weatherData.main.temp_min.ToString() + " °C";
-                Température_actuelle.Text = weatherData.main.feels_like.ToString() + " °C";
+                Température_ressentie.Text = weatherData.main.feels_like.ToString() + " °C";
                 Temps.Text = weatherData.weather[0].description.ToString();
                 Precipitation.Text = weatherData.clouds.all.ToString() + " %";
+                Vent.Text = weatherData.wind.speed.ToString() + " km/h";
+                Humidite.Text = weatherData.main.humidity.ToString() + " %";
 
                 Main main = weatherData.main;
                 string temperature = main.temp.ToString();
@@ -55,9 +58,8 @@ namespace api1_deambrogio
             }
             return null;
         }
-
-
     }
+
     public class Clouds
     {
         public int all { get; set; }
