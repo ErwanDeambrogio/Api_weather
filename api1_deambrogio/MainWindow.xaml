@@ -6,52 +6,90 @@
         xmlns:local="clr-namespace:api1_deambrogio"
         mc:Ignorable="d"
         Title="Météo" Height="850" Width="1200" WindowStartupLocation="CenterScreen">
-    
+
     <Window.Resources>
         <!-- Style pour les cartes météo -->
         <Style x:Key="WeatherCard" TargetType="Border">
-            <Setter Property="Background" Value="#1A1A1A"/>
-            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#2D3561" Offset="0"/>
+                        <GradientStop Color="#1F2544" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="CornerRadius" Value="20"/>
             <Setter Property="Padding" Value="20"/>
             <Setter Property="Margin" Value="10"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#000000" BlurRadius="25" ShadowDepth="8" Opacity="0.4" Direction="270"/>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <!-- Style pour les titres -->
         <Style x:Key="TitleText" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="#F0F4F8"/>
             <Setter Property="FontSize" Value="28"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Margin" Value="0,0,0,10"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#000000" BlurRadius="8" ShadowDepth="2" Opacity="0.3"/>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <!-- Style pour les textes normaux -->
         <Style x:Key="NormalText" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#B0B0B0"/>
+            <Setter Property="Foreground" Value="#E8EEF2"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Margin" Value="0,3,0,3"/>
         </Style>
 
         <!-- Style pour les températures -->
         <Style x:Key="TempText" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="#FFD60A"/>
             <Setter Property="FontSize" Value="48"/>
             <Setter Property="FontWeight" Value="Light"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#FFD60A" BlurRadius="15" ShadowDepth="0" Opacity="0.5"/>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <!-- Style pour les cartes des jours -->
         <Style x:Key="DayCard" TargetType="Border">
-            <Setter Property="Background" Value="#1A1A1A"/>
-            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#3A4273" Offset="0"/>
+                        <GradientStop Color="#2A3156" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="CornerRadius" Value="15"/>
             <Setter Property="Padding" Value="12"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Width" Value="140"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#000000" BlurRadius="20" ShadowDepth="5" Opacity="0.35" Direction="270"/>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
 
     <Grid>
-        <!-- Fond sobre -->
+        <!-- Fond avec gradient -->
         <Grid.Background>
-            <SolidColorBrush Color="#0F0F0F"/>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#0F1729" Offset="0"/>
+                <GradientStop Color="#1A1F3A" Offset="0.5"/>
+                <GradientStop Color="#0F1729" Offset="1"/>
+            </LinearGradientBrush>
         </Grid.Background>
 
         <Grid.RowDefinitions>
@@ -61,10 +99,23 @@
         </Grid.RowDefinitions>
 
         <!-- En-tête avec localisation -->
-        <Border Grid.Row="0" Background="#1C2833" Padding="30,20">
+        <Border Grid.Row="0" Padding="30,20">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#1E3A5F" Offset="0"/>
+                    <GradientStop Color="#2A4D7C" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Border.Effect>
+                <DropShadowEffect Color="#000000" BlurRadius="15" ShadowDepth="5" Opacity="0.4"/>
+            </Border.Effect>
             <StackPanel>
-                <TextBlock Text="📍 Lyon, France" FontSize="20" Foreground="#BDC3C7" Margin="0,0,0,5"/>
-                <TextBlock Name="DateActuelle" Text="Jeudi 15 janvier 2026" FontSize="16" Foreground="#95A5A6"/>
+                <TextBlock Text="📍 Lyon, France" FontSize="20" Foreground="#FFD60A" Margin="0,0,0,5" FontWeight="SemiBold">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="#FFD60A" BlurRadius="10" ShadowDepth="0" Opacity="0.4"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+                <TextBlock Name="DateActuelle" Text="Jeudi 15 janvier 2026" FontSize="16" Foreground="#D4E1F0" />
             </StackPanel>
         </Border>
 
@@ -75,149 +126,171 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-                <!-- Carte météo du jour -->
-                <Border Grid.Row="0" Style="{StaticResource WeatherCard}" Background="#1A1A1A" Padding="30,20">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+            <!-- Carte météo du jour -->
+            <Border Grid.Row="0" Style="{StaticResource WeatherCard}" Padding="30,20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                        <!-- Colonne gauche - Température principale -->
-                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                            <TextBlock Text="Aujourd'hui" Style="{StaticResource TitleText}" FontSize="22"/>
-                            <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                                <TextBlock x:Name="Température_actuelle" Text="18°" Style="{StaticResource TempText}" FontSize="38"/>
-                                <TextBlock Text="C" FontSize="20" Foreground="White" VerticalAlignment="Top" Margin="3,8,0,0"/>
-                            </StackPanel>
-                            <TextBlock x:Name="Temps" Text="☁️ Nuageux" FontSize="16" Foreground="#B0B0B0" Margin="0,8,0,0"/>
+                    <!-- Colonne gauche - Température principale -->
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="Aujourd'hui" Style="{StaticResource TitleText}" FontSize="22"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                            <TextBlock x:Name="Température_actuelle" Text="18°" Style="{StaticResource TempText}" FontSize="38"/>
+                            <TextBlock Text="C" FontSize="20" Foreground="#FFD60A" VerticalAlignment="Top" Margin="3,8,0,0"/>
                         </StackPanel>
+                        <TextBlock x:Name="Temps" Text="☁️ Nuageux" FontSize="16" Foreground="#B8C5D6" Margin="0,8,0,0"/>
+                    </StackPanel>
 
-                        <!-- Colonne droite - Détails -->
-                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                            <Border Background="#141414" CornerRadius="8" Padding="15" Margin="20,0,0,0">
-                                <StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="0,3">
-                                        <TextBlock Text="🌡️ Max: " Style="{StaticResource NormalText}" FontWeight="SemiBold"/>
-                                        <TextBlock x:Name="Température_max" Text="22°C" Style="{StaticResource NormalText}"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="0,3">
-                                        <TextBlock Text="❄️ Min: " Style="{StaticResource NormalText}" FontWeight="SemiBold"/>
-                                        <TextBlock x:Name="Température_min" Text="14°C" Style="{StaticResource NormalText}"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="0,3">
-                                        <TextBlock Text="🌡️ Ressentie: " Style="{StaticResource NormalText}" FontWeight="SemiBold"/>
-                                        <TextBlock x:Name="Température_ressentie" Text="16°C" Style="{StaticResource NormalText}"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="0,3">
-                                        <TextBlock Text="💧 Précipitations: " Style="{StaticResource NormalText}" FontWeight="SemiBold"/>
-                                        <TextBlock x:Name="Precipitation" Text="20%" Style="{StaticResource NormalText}"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="0,3">
-                                        <TextBlock Text="💨 Vent: " Style="{StaticResource NormalText}" FontWeight="SemiBold"/>
-                                        <TextBlock x:Name="Vent" Text="15 km/h" Style="{StaticResource NormalText}"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="0,3">
-                                        <TextBlock Text="💦 Humidité: " Style="{StaticResource NormalText}" FontWeight="SemiBold"/>
-                                        <TextBlock x:Name="Humidite" Text="65%" Style="{StaticResource NormalText}"/>
-                                    </StackPanel>
+                    <!-- Colonne droite - Détails -->
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <Border CornerRadius="15" Padding="15" Margin="20,0,0,0">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#1A2341" Offset="0"/>
+                                    <GradientStop Color="#24304F" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.Effect>
+                                <DropShadowEffect Color="#000000" BlurRadius="15" ShadowDepth="3" Opacity="0.5" Direction="315"/>
+                            </Border.Effect>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,3">
+                                    <TextBlock Text="🌡️ Max: " Style="{StaticResource NormalText}" FontWeight="SemiBold" Foreground="#FF6B6B"/>
+                                    <TextBlock x:Name="Température_max" Text="22°C" Style="{StaticResource NormalText}"/>
                                 </StackPanel>
-                            </Border>
-                        </StackPanel>
-                    </Grid>
-                </Border>
+                                <StackPanel Orientation="Horizontal" Margin="0,3">
+                                    <TextBlock Text="❄️ Min: " Style="{StaticResource NormalText}" FontWeight="SemiBold" Foreground="#4ECDC4"/>
+                                    <TextBlock x:Name="Température_min" Text="14°C" Style="{StaticResource NormalText}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,3">
+                                    <TextBlock Text="🌡️ Ressentie: " Style="{StaticResource NormalText}" FontWeight="SemiBold" Foreground="#FFA07A"/>
+                                    <TextBlock x:Name="Température_ressentie" Text="16°C" Style="{StaticResource NormalText}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,3">
+                                    <TextBlock Text="💧 Précipitations: " Style="{StaticResource NormalText}" FontWeight="SemiBold" Foreground="#6EC9F0"/>
+                                    <TextBlock x:Name="Precipitation" Text="20%" Style="{StaticResource NormalText}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,3">
+                                    <TextBlock Text="💨 Vent: " Style="{StaticResource NormalText}" FontWeight="SemiBold" Foreground="#95E1D3"/>
+                                    <TextBlock x:Name="Vent" Text="15 km/h" Style="{StaticResource NormalText}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,3">
+                                    <TextBlock Text="💦 Humidité: " Style="{StaticResource NormalText}" FontWeight="SemiBold" Foreground="#A8D8EA"/>
+                                    <TextBlock x:Name="Humidite" Text="65%" Style="{StaticResource NormalText}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </Border>
 
-                <!-- Titre prévisions -->
-                <TextBlock Grid.Row="1" Text="Prévisions sur 5 jours" 
+            <!-- Titre prévisions -->
+            <TextBlock Grid.Row="1" Text="Prévisions sur 5 jours" 
                           FontSize="18" 
                           FontWeight="Bold" 
-                          Foreground="White" 
-                          Margin="10,20,0,12"/>
+                          Foreground="#F0F4F8" 
+                          Margin="10,20,0,12">
+                <TextBlock.Effect>
+                    <DropShadowEffect Color="#000000" BlurRadius="8" ShadowDepth="2" Opacity="0.4"/>
+                </TextBlock.Effect>
+            </TextBlock>
 
-                <!-- Prévisions 5 jours -->
-                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
-                    <!-- Jour 1 -->
-                    <Border Style="{StaticResource DayCard}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <TextBlock Text="Vendredi" FontSize="14" FontWeight="SemiBold" Foreground="White" HorizontalAlignment="Center"/>
-                        <TextBlock Text="16 Jan" FontSize="11" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,6"/>
-                            <TextBlock Text="☀️" FontSize="32" Foreground="White" HorizontalAlignment="Center" Margin="0,6"/>
-                        <TextBlock Text="Ensoleillé" FontSize="11" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,6"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <TextBlock Text="20°" FontSize="20" FontWeight="Bold" Foreground="White"/>
-                            <TextBlock Text=" / 12°" FontSize="14" Foreground="White" VerticalAlignment="Bottom"/>
-                            </StackPanel>
-                        <TextBlock Text="💧 10%" FontSize="10" Foreground="White" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+            <!-- Prévisions 5 jours -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+                <!-- Jour 1 -->
+                <Border Style="{StaticResource DayCard}">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="Vendredi" FontSize="14" FontWeight="SemiBold" Foreground="#FFD60A" HorizontalAlignment="Center"/>
+                        <TextBlock Text="16 Jan" FontSize="11" Foreground="#B8C5D6" HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                        <TextBlock Text="☀️" FontSize="32" Foreground="White" HorizontalAlignment="Center" Margin="0,6"/>
+                        <TextBlock Text="Ensoleillé" FontSize="11" Foreground="#D4E1F0" HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Text="20°" FontSize="20" FontWeight="Bold" Foreground="#FF6B6B"/>
+                            <TextBlock Text=" / 12°" FontSize="14" Foreground="#4ECDC4" VerticalAlignment="Bottom"/>
                         </StackPanel>
-                    </Border>
+                        <TextBlock Text="💧 10%" FontSize="10" Foreground="#6EC9F0" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                    </StackPanel>
+                </Border>
 
-                    <!-- Jour 2 -->
-                    <Border Style="{StaticResource DayCard}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <TextBlock Text="Samedi" FontSize="14" FontWeight="SemiBold" Foreground="White" HorizontalAlignment="Center"/>
-                        <TextBlock Text="17 Jan" FontSize="11" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                <!-- Jour 2 -->
+                <Border Style="{StaticResource DayCard}">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="Samedi" FontSize="14" FontWeight="SemiBold" Foreground="#FFD60A" HorizontalAlignment="Center"/>
+                        <TextBlock Text="17 Jan" FontSize="11" Foreground="#B8C5D6" HorizontalAlignment="Center" Margin="0,0,0,6"/>
                         <TextBlock Text="⛅" FontSize="32" Foreground="White" HorizontalAlignment="Center" Margin="0,6"/>
-                        <TextBlock Text="Partiellement nuageux" FontSize="10" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,6" TextWrapping="Wrap" TextAlignment="Center"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <TextBlock Text="19°" FontSize="20" FontWeight="Bold" Foreground="White"/>
-                            <TextBlock Text=" / 13°" FontSize="14" Foreground="White" VerticalAlignment="Bottom"/>
-                            </StackPanel>
-                        <TextBlock Text="💧 15%" FontSize="10" Foreground="White" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                        <TextBlock Text="Partiellement nuageux" FontSize="10" Foreground="#D4E1F0" HorizontalAlignment="Center" Margin="0,0,0,6" TextWrapping="Wrap" TextAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Text="19°" FontSize="20" FontWeight="Bold" Foreground="#FF6B6B"/>
+                            <TextBlock Text=" / 13°" FontSize="14" Foreground="#4ECDC4" VerticalAlignment="Bottom"/>
                         </StackPanel>
-                    </Border>
+                        <TextBlock Text="💧 15%" FontSize="10" Foreground="#6EC9F0" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                    </StackPanel>
+                </Border>
 
-                    <!-- Jour 3 -->
-                    <Border Style="{StaticResource DayCard}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <TextBlock Text="Dimanche" FontSize="14" FontWeight="SemiBold" Foreground="White" HorizontalAlignment="Center"/>
-                        <TextBlock Text="18 Jan" FontSize="11" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                <!-- Jour 3 -->
+                <Border Style="{StaticResource DayCard}">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="Dimanche" FontSize="14" FontWeight="SemiBold" Foreground="#FFD60A" HorizontalAlignment="Center"/>
+                        <TextBlock Text="18 Jan" FontSize="11" Foreground="#B8C5D6" HorizontalAlignment="Center" Margin="0,0,0,6"/>
                         <TextBlock Text="🌧️" FontSize="32" Foreground="White" HorizontalAlignment="Center" Margin="0,6"/>
-                        <TextBlock Text="Pluie" FontSize="11" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,6"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <TextBlock Text="16°" FontSize="20" FontWeight="Bold" Foreground="White"/>
-                            <TextBlock Text=" / 11°" FontSize="14" Foreground="White" VerticalAlignment="Bottom"/>
-                            </StackPanel>
-                        <TextBlock Text="💧 75%" FontSize="10" Foreground="White" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                        <TextBlock Text="Pluie" FontSize="11" Foreground="#D4E1F0" HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Text="16°" FontSize="20" FontWeight="Bold" Foreground="#FF6B6B"/>
+                            <TextBlock Text=" / 11°" FontSize="14" Foreground="#4ECDC4" VerticalAlignment="Bottom"/>
                         </StackPanel>
-                    </Border>
+                        <TextBlock Text="💧 75%" FontSize="10" Foreground="#6EC9F0" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                    </StackPanel>
+                </Border>
 
-                    <!-- Jour 4 -->
-                    <Border Style="{StaticResource DayCard}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <TextBlock Text="Lundi" FontSize="14" FontWeight="SemiBold" Foreground="White" HorizontalAlignment="Center"/>
-                        <TextBlock Text="19 Jan" FontSize="11" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,6"/>
-                            <TextBlock Text="☁️" FontSize="32" Foreground="White" HorizontalAlignment="Center" Margin="0,6"/>
-                        <TextBlock Text="Nuageux" FontSize="11" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,6"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <TextBlock Text="17°" FontSize="20" FontWeight="Bold" Foreground="White"/>
-                            <TextBlock Text=" / 10°" FontSize="14" Foreground="White" VerticalAlignment="Bottom"/>
-                            </StackPanel>
-                        <TextBlock Text="💧 30%" FontSize="10" Foreground="White" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                <!-- Jour 4 -->
+                <Border Style="{StaticResource DayCard}">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="Lundi" FontSize="14" FontWeight="SemiBold" Foreground="#FFD60A" HorizontalAlignment="Center"/>
+                        <TextBlock Text="19 Jan" FontSize="11" Foreground="#B8C5D6" HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                        <TextBlock Text="☁️" FontSize="32" Foreground="White" HorizontalAlignment="Center" Margin="0,6"/>
+                        <TextBlock Text="Nuageux" FontSize="11" Foreground="#D4E1F0" HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Text="17°" FontSize="20" FontWeight="Bold" Foreground="#FF6B6B"/>
+                            <TextBlock Text=" / 10°" FontSize="14" Foreground="#4ECDC4" VerticalAlignment="Bottom"/>
                         </StackPanel>
-                    </Border>
+                        <TextBlock Text="💧 30%" FontSize="10" Foreground="#6EC9F0" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                    </StackPanel>
+                </Border>
 
-                    <!-- Jour 5 -->
-                    <Border Style="{StaticResource DayCard}">
-                        <StackPanel HorizontalAlignment="Center">
-                            <TextBlock Text="Mardi" FontSize="14" FontWeight="SemiBold" Foreground="White" HorizontalAlignment="Center"/>
-                            <TextBlock Text="20 Jan" FontSize="11" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,6"/>
-                            <TextBlock Text="🌤️" FontSize="32" Foreground="White" HorizontalAlignment="Center"  Margin="0,6"/>
-                        <TextBlock Text="Peu nuageux" FontSize="11" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,6"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <TextBlock Text="21°" FontSize="20" FontWeight="Bold" Foreground="White"/>
-                            <TextBlock Text=" / 13°" FontSize="14" Foreground="White" VerticalAlignment="Bottom"/>
-                            </StackPanel>
-                        <TextBlock Text="💧 5%" FontSize="10" Foreground="White" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                <!-- Jour 5 -->
+                <Border Style="{StaticResource DayCard}">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="Mardi" FontSize="14" FontWeight="SemiBold" Foreground="#FFD60A" HorizontalAlignment="Center"/>
+                        <TextBlock Text="20 Jan" FontSize="11" Foreground="#B8C5D6" HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                        <TextBlock Text="🌤️" FontSize="32" Foreground="White" HorizontalAlignment="Center"  Margin="0,6"/>
+                        <TextBlock Text="Peu nuageux" FontSize="11" Foreground="#D4E1F0" HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Text="21°" FontSize="20" FontWeight="Bold" Foreground="#FF6B6B"/>
+                            <TextBlock Text=" / 13°" FontSize="14" Foreground="#4ECDC4" VerticalAlignment="Bottom"/>
                         </StackPanel>
-                    </Border>
-                </StackPanel>
-            </Grid>
+                        <TextBlock Text="💧 5%" FontSize="10" Foreground="#6EC9F0" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
 
         <!-- Pied de page -->
-        <Border Grid.Row="2" Background="#1C2833" Padding="20">
+        <Border Grid.Row="2" Padding="20">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#1E3A5F" Offset="0"/>
+                    <GradientStop Color="#2A4D7C" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Border.Effect>
+                <DropShadowEffect Color="#000000" BlurRadius="15" ShadowDepth="5" Opacity="0.4"/>
+            </Border.Effect>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Text="🔄 Dernière mise à jour: " FontSize="14" Foreground="#95A5A6"/>
-                <TextBlock Name="DerniereMiseAJour" Text="15:30" FontSize="14" Foreground="#BDC3C7"/>
+                <TextBlock Text="🔄 Dernière mise à jour: " FontSize="14" Foreground="#A8D8EA"/>
+                <TextBlock Name="DerniereMiseAJour" Text="15:30" FontSize="14" Foreground="#FFD60A" FontWeight="SemiBold"/>
             </StackPanel>
         </Border>
     </Grid>
