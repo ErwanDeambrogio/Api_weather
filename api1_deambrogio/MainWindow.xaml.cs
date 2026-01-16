@@ -25,32 +25,39 @@ namespace api1_deambrogio
         public MainWindow()
         {
             InitializeComponent();
-            GetWeather("Paris");
+            _: GetWeather("Paris");
         }
 
         public async Task<string> GetWeather(string city)
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync("https://api.openweathermap.org/data/2.5/weather?q=" + city + ",fr&appid=c21a75b667d6f7abb81f118dcf8d4611&units=metric");
+            HttpResponseMessage response = await client.GetAsync("https://www.prevision-meteo.ch/services/json/Annecy");
 
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
                 Root weatherData = JsonConvert.DeserializeObject<Root>(content);
 
-                Température_actuelle.Text = weatherData.main.temp.ToString() + " °C";
-                Température_max.Text = weatherData.main.temp_max.ToString() + " °C";
-                Température_min.Text = weatherData.main.temp_min.ToString() + " °C";
-                Température_ressentie.Text = weatherData.main.feels_like.ToString() + " °C";
-                Temps.Text = weatherData.weather[0].description.ToString();
-                Precipitation.Text = weatherData.clouds.all.ToString() + " %";
-                Vent.Text = weatherData.wind.speed.ToString() + " km/h";
-                Humidite.Text = weatherData.main.humidity.ToString() + " %";
+                CurrentCondition current = weatherData.current_condition;
+                var tmax = current.tmp;
 
-                Main main = weatherData.main;
-                string temperature = main.temp.ToString();
-                var name = weatherData.name;
-                return name;
+
+
+                FcstDay0 fcstDay0 = weatherData.fcst_day_0;
+                Température_max.Text = fcstDay0.tmax.ToString() + " °C";
+                Température_min.Text = fcstDay0.tmin.ToString() + " °C";  
+                DateActuelle.Text = fcstDay0.day_long + " " + fcstDay0.date;
+                Condition.Text = fcstDay0.condition;
+
+
+                FcstDay1 fcstDay1 = weatherData.fcst_day_1;
+
+                FcstDay2 fcstDay2 = weatherData.fcst_day_2;
+
+                FcstDay3 fcstDay3 = weatherData.fcst_day_3;
+
+                FcstDay4 fcstDay4 = weatherData.fcst_day_4; 
+
             }
             else
             {
@@ -60,66 +67,774 @@ namespace api1_deambrogio
         }
     }
 
-    public class Clouds
+    // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
+    public class _0H00
     {
-        public int all { get; set; }
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public int TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public int PRMSL { get; set; }
+        public int APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
     }
 
-    public class Coord
+    public class _10H00
     {
-        public double lon { get; set; }
-        public double lat { get; set; }
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public double TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public double APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
     }
 
-    public class Main
+    public class _11H00
     {
-        public double temp { get; set; }
-        public double feels_like { get; set; }
-        public double temp_min { get; set; }
-        public double temp_max { get; set; }
-        public int pressure { get; set; }
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public double TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public double APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class _12H00
+    {
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public double TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public double APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class _13H00
+    {
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public double TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public int APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class _14H00
+    {
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public double TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public int APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class _15H00
+    {
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public double TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public int APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class _16H00
+    {
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public double TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public int APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class _17H00
+    {
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public int TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public double APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class _18H00
+    {
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public double TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public double APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class _19H00
+    {
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public double TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public double APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class _1H00
+    {
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public double TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public double APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class _20H00
+    {
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public double TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public double APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class _21H00
+    {
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public double TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public double APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class _22H00
+    {
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public double TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public double APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class _23H00
+    {
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public double TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public int APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class _2H00
+    {
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public double TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public double APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class _3H00
+    {
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public double TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public double APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class _4H00
+    {
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public double TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public double APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class _5H00
+    {
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public double TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public int APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class _6H00
+    {
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public double TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public int APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class _7H00
+    {
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public double TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public int APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class _8H00
+    {
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public int TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public double APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class _9H00
+    {
+        public string ICON { get; set; }
+        public string CONDITION { get; set; }
+        public string CONDITION_KEY { get; set; }
+        public double TMP2m { get; set; }
+        public double DPT2m { get; set; }
+        public object WNDCHILL2m { get; set; }
+        public object HUMIDEX { get; set; }
+        public int RH2m { get; set; }
+        public double PRMSL { get; set; }
+        public double APCPsfc { get; set; }
+        public int WNDSPD10m { get; set; }
+        public int WNDGUST10m { get; set; }
+        public int WNDDIR10m { get; set; }
+        public string WNDDIRCARD10 { get; set; }
+        public int ISSNOW { get; set; }
+        public string HCDC { get; set; }
+        public string MCDC { get; set; }
+        public string LCDC { get; set; }
+        public int HGT0C { get; set; }
+        public int KINDEX { get; set; }
+        public string CAPE180_0 { get; set; }
+        public int CIN180_0 { get; set; }
+    }
+
+    public class CityInfo
+    {
+        public string name { get; set; }
+        public string country { get; set; }
+        public string latitude { get; set; }
+        public string longitude { get; set; }
+        public string elevation { get; set; }
+        public string sunrise { get; set; }
+        public string sunset { get; set; }
+    }
+
+    public class CurrentCondition
+    {
+        public string date { get; set; }
+        public string hour { get; set; }
+        public int tmp { get; set; }
+        public int wnd_spd { get; set; }
+        public int wnd_gust { get; set; }
+        public string wnd_dir { get; set; }
+        public double pressure { get; set; }
         public int humidity { get; set; }
-        public int sea_level { get; set; }
-        public int grnd_level { get; set; }
+        public string condition { get; set; }
+        public string condition_key { get; set; }
+        public string icon { get; set; }
+        public string icon_big { get; set; }
+    }
+
+    public class FcstDay0
+    {
+        public string date { get; set; }
+        public string day_short { get; set; }
+        public string day_long { get; set; }
+        public int tmin { get; set; }
+        public int tmax { get; set; }
+        public string condition { get; set; }
+        public string condition_key { get; set; }
+        public string icon { get; set; }
+        public string icon_big { get; set; }
+        public HourlyData hourly_data { get; set; }
+    }
+
+    public class FcstDay1
+    {
+        public string date { get; set; }
+        public string day_short { get; set; }
+        public string day_long { get; set; }
+        public int tmin { get; set; }
+        public int tmax { get; set; }
+        public string condition { get; set; }
+        public string condition_key { get; set; }
+        public string icon { get; set; }
+        public string icon_big { get; set; }
+        public HourlyData hourly_data { get; set; }
+    }
+
+    public class FcstDay2
+    {
+        public string date { get; set; }
+        public string day_short { get; set; }
+        public string day_long { get; set; }
+        public int tmin { get; set; }
+        public int tmax { get; set; }
+        public string condition { get; set; }
+        public string condition_key { get; set; }
+        public string icon { get; set; }
+        public string icon_big { get; set; }
+        public HourlyData hourly_data { get; set; }
+    }
+
+    public class FcstDay3
+    {
+        public string date { get; set; }
+        public string day_short { get; set; }
+        public string day_long { get; set; }
+        public int tmin { get; set; }
+        public int tmax { get; set; }
+        public string condition { get; set; }
+        public string condition_key { get; set; }
+        public string icon { get; set; }
+        public string icon_big { get; set; }
+        public HourlyData hourly_data { get; set; }
+    }
+
+    public class FcstDay4
+    {
+        public string date { get; set; }
+        public string day_short { get; set; }
+        public string day_long { get; set; }
+        public int tmin { get; set; }
+        public int tmax { get; set; }
+        public string condition { get; set; }
+        public string condition_key { get; set; }
+        public string icon { get; set; }
+        public string icon_big { get; set; }
+        public HourlyData hourly_data { get; set; }
+    }
+
+    public class ForecastInfo
+    {
+        public object latitude { get; set; }
+        public object longitude { get; set; }
+        public string elevation { get; set; }
+    }
+
+    public class HourlyData
+    {
+        public _0H00 _0H00 { get; set; }
+        public _1H00 _1H00 { get; set; }
+        public _2H00 _2H00 { get; set; }
+        public _3H00 _3H00 { get; set; }
+        public _4H00 _4H00 { get; set; }
+        public _5H00 _5H00 { get; set; }
+        public _6H00 _6H00 { get; set; }
+        public _7H00 _7H00 { get; set; }
+        public _8H00 _8H00 { get; set; }
+        public _9H00 _9H00 { get; set; }
+        public _10H00 _10H00 { get; set; }
+        public _11H00 _11H00 { get; set; }
+        public _12H00 _12H00 { get; set; }
+        public _13H00 _13H00 { get; set; }
+        public _14H00 _14H00 { get; set; }
+        public _15H00 _15H00 { get; set; }
+        public _16H00 _16H00 { get; set; }
+        public _17H00 _17H00 { get; set; }
+        public _18H00 _18H00 { get; set; }
+        public _19H00 _19H00 { get; set; }
+        public _20H00 _20H00 { get; set; }
+        public _21H00 _21H00 { get; set; }
+        public _22H00 _22H00 { get; set; }
+        public _23H00 _23H00 { get; set; }
     }
 
     public class Root
     {
-        public Coord coord { get; set; }
-        public List<Weather> weather { get; set; }
-        public string @base { get; set; }
-        public Main main { get; set; }
-        public int visibility { get; set; }
-        public Wind wind { get; set; }
-        public Clouds clouds { get; set; }
-        public int dt { get; set; }
-        public Sys sys { get; set; }
-        public int timezone { get; set; }
-        public int id { get; set; }
-        public string name { get; set; }
-        public int cod { get; set; }
+        public CityInfo city_info { get; set; }
+        public ForecastInfo forecast_info { get; set; }
+        public CurrentCondition current_condition { get; set; }
+        public FcstDay0 fcst_day_0 { get; set; }
+        public FcstDay1 fcst_day_1 { get; set; }
+        public FcstDay2 fcst_day_2 { get; set; }
+        public FcstDay3 fcst_day_3 { get; set; }
+        public FcstDay4 fcst_day_4 { get; set; }
     }
 
-    public class Sys
-    {
-        public int type { get; set; }
-        public int id { get; set; }
-        public string country { get; set; }
-        public int sunrise { get; set; }
-        public int sunset { get; set; }
-    }
 
-    public class Weather
-    {
-        public int id { get; set; }
-        public string main { get; set; }
-        public string description { get; set; }
-        public string icon { get; set; }
-    }
-
-    public class Wind
-    {
-        public double speed { get; set; }
-        public int deg { get; set; }
-    }
 }

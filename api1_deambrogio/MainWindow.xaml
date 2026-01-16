@@ -179,7 +179,7 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,3">
                                     <TextBlock Text="💦 Humidité: " Style="{StaticResource NormalText}" FontWeight="SemiBold" Foreground="#A8D8EA"/>
-                                    <TextBlock x:Name="Humidite" Text="65%" Style="{StaticResource NormalText}"/>
+                                    <TextBlock x:Name="Condition" Text="65%" Style="{StaticResource NormalText}"/>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
