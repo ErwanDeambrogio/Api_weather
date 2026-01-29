@@ -203,77 +203,63 @@
                 <!-- Jour 1 -->
                 <Border Style="{StaticResource DayCard}">
                     <StackPanel HorizontalAlignment="Center">
-                        <TextBlock Text="Vendredi" FontSize="14" FontWeight="SemiBold" Foreground="#FFD60A" HorizontalAlignment="Center"/>
-                        <TextBlock Text="16 Jan" FontSize="11" Foreground="#B8C5D6" HorizontalAlignment="Center" Margin="0,0,0,6"/>
-                        <TextBlock Text="☀️" FontSize="32" Foreground="White" HorizontalAlignment="Center" Margin="0,6"/>
-                        <TextBlock Text="Ensoleillé" FontSize="11" Foreground="#D4E1F0" HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                        <TextBlock Name="Day" Text="Vendredi" FontSize="14" FontWeight="SemiBold" Foreground="#FFD60A" HorizontalAlignment="Center"/>
+                        <TextBlock Name="Date" Text="16 Jan" FontSize="11" Foreground="#B8C5D6" HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                        <TextBlock Name="Icon" Text="☀️" FontSize="32" Foreground="White" HorizontalAlignment="Center" Margin="0,6"/>
+                        <TextBlock Name="Temp" Text="Ensoleillé" FontSize="11" Foreground="#D4E1F0" HorizontalAlignment="Center" Margin="0,0,0,6"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBlock Text="20°" FontSize="20" FontWeight="Bold" Foreground="#FF6B6B"/>
-                            <TextBlock Text=" / 12°" FontSize="14" Foreground="#4ECDC4" VerticalAlignment="Bottom"/>
+                            <TextBlock Name="temp_max" Text="20°" FontSize="20" FontWeight="Bold" Foreground="#FF6B6B"/>
+                            <TextBlock Name="temp_min" Text=" / 12°" FontSize="14" Foreground="#4ECDC4" VerticalAlignment="Bottom"/>
                         </StackPanel>
-                        <TextBlock Text="💧 10%" FontSize="10" Foreground="#6EC9F0" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                        <TextBlock Name="precipitation" Text="💧 10%" FontSize="10" Foreground="#6EC9F0" HorizontalAlignment="Center" Margin="0,3,0,0"/>
                     </StackPanel>
                 </Border>
 
                 <!-- Jour 2 -->
                 <Border Style="{StaticResource DayCard}">
                     <StackPanel HorizontalAlignment="Center">
-                        <TextBlock Text="Samedi" FontSize="14" FontWeight="SemiBold" Foreground="#FFD60A" HorizontalAlignment="Center"/>
-                        <TextBlock Text="17 Jan" FontSize="11" Foreground="#B8C5D6" HorizontalAlignment="Center" Margin="0,0,0,6"/>
-                        <TextBlock Text="⛅" FontSize="32" Foreground="White" HorizontalAlignment="Center" Margin="0,6"/>
-                        <TextBlock Text="Partiellement nuageux" FontSize="10" Foreground="#D4E1F0" HorizontalAlignment="Center" Margin="0,0,0,6" TextWrapping="Wrap" TextAlignment="Center"/>
+                        <TextBlock Name="DAY" Text="Vendredi" FontSize="14" FontWeight="SemiBold" Foreground="#FFD60A" HorizontalAlignment="Center"/>
+                        <TextBlock Name="DATE" Text="16 Jan" FontSize="11" Foreground="#B8C5D6" HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                        <TextBlock Name="ICON" Text="☀️" FontSize="32" Foreground="White" HorizontalAlignment="Center" Margin="0,6"/>
+                        <TextBlock Name="TEMP" Text="Ensoleillé" FontSize="11" Foreground="#D4E1F0" HorizontalAlignment="Center" Margin="0,0,0,6"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBlock Text="19°" FontSize="20" FontWeight="Bold" Foreground="#FF6B6B"/>
-                            <TextBlock Text=" / 13°" FontSize="14" Foreground="#4ECDC4" VerticalAlignment="Bottom"/>
+                            <TextBlock Name="Temp_max" Text="20°" FontSize="20" FontWeight="Bold" Foreground="#FF6B6B"/>
+                            <TextBlock Name="Temp_min" Text=" / 12°" FontSize="14" Foreground="#4ECDC4" VerticalAlignment="Bottom"/>
                         </StackPanel>
-                        <TextBlock Text="💧 15%" FontSize="10" Foreground="#6EC9F0" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                        <TextBlock Name="Précipitation" Text="💧 10%" FontSize="10" Foreground="#6EC9F0" HorizontalAlignment="Center" Margin="0,3,0,0"/>
                     </StackPanel>
                 </Border>
 
                 <!-- Jour 3 -->
                 <Border Style="{StaticResource DayCard}">
                     <StackPanel HorizontalAlignment="Center">
-                        <TextBlock Text="Dimanche" FontSize="14" FontWeight="SemiBold" Foreground="#FFD60A" HorizontalAlignment="Center"/>
-                        <TextBlock Text="18 Jan" FontSize="11" Foreground="#B8C5D6" HorizontalAlignment="Center" Margin="0,0,0,6"/>
-                        <TextBlock Text="🌧️" FontSize="32" Foreground="White" HorizontalAlignment="Center" Margin="0,6"/>
-                        <TextBlock Text="Pluie" FontSize="11" Foreground="#D4E1F0" HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                        <TextBlock Name="jour" Text="Vendredi" FontSize="14" FontWeight="SemiBold" Foreground="#FFD60A" HorizontalAlignment="Center"/>
+                        <TextBlock Name="dates" Text="16 Jan" FontSize="11" Foreground="#B8C5D6" HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                        <TextBlock Name="Icons" Text="☀️" FontSize="32" Foreground="White" HorizontalAlignment="Center" Margin="0,6"/>
+                        <TextBlock Name="temperature" Text="Ensoleillé" FontSize="11" Foreground="#D4E1F0" HorizontalAlignment="Center" Margin="0,0,0,6"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBlock Text="16°" FontSize="20" FontWeight="Bold" Foreground="#FF6B6B"/>
-                            <TextBlock Text=" / 11°" FontSize="14" Foreground="#4ECDC4" VerticalAlignment="Bottom"/>
+                            <TextBlock Name="TEMP_max" Text="20°" FontSize="20" FontWeight="Bold" Foreground="#FF6B6B"/>
+                            <TextBlock Name="TEMP_min" Text=" / 12°" FontSize="14" Foreground="#4ECDC4" VerticalAlignment="Bottom"/>
                         </StackPanel>
-                        <TextBlock Text="💧 75%" FontSize="10" Foreground="#6EC9F0" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                        <TextBlock Name="Precip" Text="💧 10%" FontSize="10" Foreground="#6EC9F0" HorizontalAlignment="Center" Margin="0,3,0,0"/>
                     </StackPanel>
                 </Border>
 
                 <!-- Jour 4 -->
                 <Border Style="{StaticResource DayCard}">
                     <StackPanel HorizontalAlignment="Center">
-                        <TextBlock Text="Lundi" FontSize="14" FontWeight="SemiBold" Foreground="#FFD60A" HorizontalAlignment="Center"/>
-                        <TextBlock Text="19 Jan" FontSize="11" Foreground="#B8C5D6" HorizontalAlignment="Center" Margin="0,0,0,6"/>
-                        <TextBlock Text="☁️" FontSize="32" Foreground="White" HorizontalAlignment="Center" Margin="0,6"/>
-                        <TextBlock Text="Nuageux" FontSize="11" Foreground="#D4E1F0" HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                        <TextBlock Name="Jour" Text="Vendredi" FontSize="14" FontWeight="SemiBold" Foreground="#FFD60A" HorizontalAlignment="Center"/>
+                        <TextBlock Name="date" Text="16 Jan" FontSize="11" Foreground="#B8C5D6" HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                        <TextBlock Name="Images" Text="☀️" FontSize="32" Foreground="White" HorizontalAlignment="Center" Margin="0,6"/>
+                        <TextBlock Name="Tempé" Text="Ensoleillé" FontSize="11" Foreground="#D4E1F0" HorizontalAlignment="Center" Margin="0,0,0,6"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBlock Text="17°" FontSize="20" FontWeight="Bold" Foreground="#FF6B6B"/>
-                            <TextBlock Text=" / 10°" FontSize="14" Foreground="#4ECDC4" VerticalAlignment="Bottom"/>
+                            <TextBlock Name="tempé_max" Text="20°" FontSize="20" FontWeight="Bold" Foreground="#FF6B6B"/>
+                            <TextBlock Name="tempé_min" Text=" / 12°" FontSize="14" Foreground="#4ECDC4" VerticalAlignment="Bottom"/>
                         </StackPanel>
-                        <TextBlock Text="💧 30%" FontSize="10" Foreground="#6EC9F0" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                        <TextBlock Name="précipitation" Text="💧 10%" FontSize="10" Foreground="#6EC9F0" HorizontalAlignment="Center" Margin="0,3,0,0"/>
                     </StackPanel>
                 </Border>
 
-                <!-- Jour 5 -->
-                <Border Style="{StaticResource DayCard}">
-                    <StackPanel HorizontalAlignment="Center">
-                        <TextBlock Text="Mardi" FontSize="14" FontWeight="SemiBold" Foreground="#FFD60A" HorizontalAlignment="Center"/>
-                        <TextBlock Text="20 Jan" FontSize="11" Foreground="#B8C5D6" HorizontalAlignment="Center" Margin="0,0,0,6"/>
-                        <TextBlock Text="🌤️" FontSize="32" Foreground="White" HorizontalAlignment="Center"  Margin="0,6"/>
-                        <TextBlock Text="Peu nuageux" FontSize="11" Foreground="#D4E1F0" HorizontalAlignment="Center" Margin="0,0,0,6"/>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBlock Text="21°" FontSize="20" FontWeight="Bold" Foreground="#FF6B6B"/>
-                            <TextBlock Text=" / 13°" FontSize="14" Foreground="#4ECDC4" VerticalAlignment="Bottom"/>
-                        </StackPanel>
-                        <TextBlock Text="💧 5%" FontSize="10" Foreground="#6EC9F0" HorizontalAlignment="Center" Margin="0,3,0,0"/>
-                    </StackPanel>
-                </Border>
             </StackPanel>
         </Grid>
 

@@ -36,27 +36,61 @@ namespace api1_deambrogio
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                Root weatherData = JsonConvert.DeserializeObject<Root>(content);
 
-                CurrentCondition current = weatherData.current_condition;
-                var tmax = current.tmp;
+                Root root = JsonConvert.DeserializeObject<Root>(content);
+
+               // Today
+
+               var today = root.fcst_day_0;
+
+                var temp = root.current_condition.tmp;
+                Température_actuelle.Text = temp.ToString() + " °C";
+                Vent.Text = root.current_condition.wnd_spd.ToString() + " km/h";
+                Température_max.Text = today.tmax.ToString() + " °C";
+                Température_min.Text =  today.tmin.ToString() + " °C";
+                Temps.Text = today.condition_key.ToString();
+                Condition.Text = root.current_condition.humidity.ToString() + " %";
+
+                double totalPrecipMm = 0;
+                if (today != null && today.hourly_data != null)
+                {
+                    var hourProps = today.hourly_data.GetType().GetProperties();
+                    foreach (var p in hourProps)
+                    {
+                        var hourObj = p.GetValue(today.hourly_data);
+                        if (hourObj == null) continue;
+
+                        var apcpProp = hourObj.GetType().GetProperty("APCPsfc");
+                        if (apcpProp == null) continue;
+
+                        var val = apcpProp.GetValue(hourObj);
+                        if (val == null) continue;
 
 
+                        try
+                        {
+                            totalPrecipMm += Convert.ToDouble(val);
+                        }
+                        catch
+                        {
+                            // ignorer valeurs non convertibles
+                        }
+                    }
+                }
+                
 
-                FcstDay0 fcstDay0 = weatherData.fcst_day_0;
-                Température_max.Text = fcstDay0.tmax.ToString() + " °C";
-                Température_min.Text = fcstDay0.tmin.ToString() + " °C";  
-                DateActuelle.Text = fcstDay0.day_long + " " + fcstDay0.date;
-                Condition.Text = fcstDay0.condition;
+                // jour1
+                var jour1 = root.fcst_day_1;
+
+                //Jour2
+                var jour2 = root.fcst_day_2.day_long;
 
 
-                FcstDay1 fcstDay1 = weatherData.fcst_day_1;
+                //Jour3
+                var jour3 = root.fcst_day_3.day_long;
 
-                FcstDay2 fcstDay2 = weatherData.fcst_day_2;
-
-                FcstDay3 fcstDay3 = weatherData.fcst_day_3;
-
-                FcstDay4 fcstDay4 = weatherData.fcst_day_4; 
+                //jour4
+                var jour4 = root.fcst_day_4.day_long;
 
             }
             else
@@ -796,33 +830,112 @@ namespace api1_deambrogio
         public string elevation { get; set; }
     }
 
+
     public class HourlyData
     {
+
+       
         public _0H00 _0H00 { get; set; }
+   
         public _1H00 _1H00 { get; set; }
+
         public _2H00 _2H00 { get; set; }
+
         public _3H00 _3H00 { get; set; }
+
         public _4H00 _4H00 { get; set; }
+
         public _5H00 _5H00 { get; set; }
+ 
         public _6H00 _6H00 { get; set; }
+
         public _7H00 _7H00 { get; set; }
+
         public _8H00 _8H00 { get; set; }
+
         public _9H00 _9H00 { get; set; }
+
         public _10H00 _10H00 { get; set; }
+  
         public _11H00 _11H00 { get; set; }
+
         public _12H00 _12H00 { get; set; }
+
         public _13H00 _13H00 { get; set; }
+
         public _14H00 _14H00 { get; set; }
+
         public _15H00 _15H00 { get; set; }
+
         public _16H00 _16H00 { get; set; }
+ 
         public _17H00 _17H00 { get; set; }
+
         public _18H00 _18H00 { get; set; }
+
         public _19H00 _19H00 { get; set; }
+
         public _20H00 _20H00 { get; set; }
+
         public _21H00 _21H00 { get; set; }
+
         public _22H00 _22H00 { get; set; }
+
         public _23H00 _23H00 { get; set; }
     }
+
+    //public class HourlyData
+    //{
+
+    //    [JsonProperty("0H00")]
+    //    public _0H00 _0H00 { get; set; }
+    //    [JsonProperty("1H00")]
+    //    public _1H00 _1H00 { get; set; }
+    //    [JsonProperty("2H00")]
+    //    public _2H00 _2H00 { get; set; }
+    //    [JsonProperty("3H00")]
+    //    public _3H00 _3H00 { get; set; }
+    //    [JsonProperty("4H00")]
+    //    public _4H00 _4H00 { get; set; }
+    //    [JsonProperty("5H00")]
+    //    public _5H00 _5H00 { get; set; }
+    //    [JsonProperty("6H00")]
+    //    public _6H00 _6H00 { get; set; }
+    //    [JsonProperty("7H00")]
+    //    public _7H00 _7H00 { get; set; }
+    //    [JsonProperty("8H00")]
+    //    public _8H00 _8H00 { get; set; }
+    //    [JsonProperty("9H00")]
+    //    public _9H00 _9H00 { get; set; }
+    //    [JsonProperty("10H00")]
+    //    public _10H00 _10H00 { get; set; }
+    //    [JsonProperty("11H00")]
+    //    public _11H00 _11H00 { get; set; }
+    //    [JsonProperty("12H00")]
+    //    public _12H00 _12H00 { get; set; }
+    //    [JsonProperty("13H00")]
+    //    public _13H00 _13H00 { get; set; }
+    //    [JsonProperty("14H00")]
+    //    public _14H00 _14H00 { get; set; }
+    //    [JsonProperty("15H00")]
+    //    public _15H00 _15H00 { get; set; }
+    //    [JsonProperty("16H00")]
+    //    public _16H00 _16H00 { get; set; }
+    //    [JsonProperty("17H00")]
+    //    public _17H00 _17H00 { get; set; }
+    //    [JsonProperty("18H00")]
+    //    public _18H00 _18H00 { get; set; }
+    //    [JsonProperty("19H00")]
+    //    public _19H00 _19H00 { get; set; }
+    //    [JsonProperty("20H00")]
+    //    public _20H00 _20H00 { get; set; }
+    //    [JsonProperty("21H00")]
+    //    public _21H00 _21H00 { get; set; }
+    //    [JsonProperty("22H00")]
+    //    public _22H00 _22H00 { get; set; }
+    //    [JsonProperty("23H00")]
+    //    public _23H00 _23H00 { get; set; }
+    //}
 
     public class Root
     {
