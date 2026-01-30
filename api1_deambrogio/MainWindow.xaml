@@ -138,8 +138,8 @@
                     <StackPanel Grid.Column="0" VerticalAlignment="Center">
                         <TextBlock Text="Aujourd'hui" Style="{StaticResource TitleText}" FontSize="22"/>
                         <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                            <TextBlock x:Name="Température_actuelle" Text="18°" Style="{StaticResource TempText}" FontSize="38"/>
-                            <TextBlock Text="C" FontSize="20" Foreground="#FFD60A" VerticalAlignment="Top" Margin="3,8,0,0"/>
+                            <TextBlock x:Name="Température_actuelle" Text="18°" Style="{StaticResource TempText}" FontSize="38" Width="43"/>
+                            <TextBlock Text=" " FontSize="20" Foreground="#FFD60A" Height="31" Width="30"/>
                         </StackPanel>
                         <TextBlock x:Name="Temps" Text="☁️ Nuageux" FontSize="16" Foreground="#B8C5D6" Margin="0,8,0,0"/>
                     </StackPanel>
@@ -165,10 +165,7 @@
                                     <TextBlock Text="❄️ Min: " Style="{StaticResource NormalText}" FontWeight="SemiBold" Foreground="#4ECDC4"/>
                                     <TextBlock x:Name="Température_min" Text="14°C" Style="{StaticResource NormalText}"/>
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal" Margin="0,3">
-                                    <TextBlock Text="🌡️ Ressentie: " Style="{StaticResource NormalText}" FontWeight="SemiBold" Foreground="#FFA07A"/>
-                                    <TextBlock x:Name="Température_ressentie" Text="16°C" Style="{StaticResource NormalText}"/>
-                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,3"/>
                                 <StackPanel Orientation="Horizontal" Margin="0,3">
                                     <TextBlock Text="💧 Précipitations: " Style="{StaticResource NormalText}" FontWeight="SemiBold" Foreground="#6EC9F0"/>
                                     <TextBlock x:Name="Precipitation" Text="20%" Style="{StaticResource NormalText}"/>
@@ -188,7 +185,7 @@
             </Border>
 
             <!-- Titre prévisions -->
-            <TextBlock Grid.Row="1" Text="Prévisions sur 5 jours" 
+            <TextBlock Grid.Row="1" Text="Prévisions sur 4 jours" 
                           FontSize="18" 
                           FontWeight="Bold" 
                           Foreground="#F0F4F8" 
