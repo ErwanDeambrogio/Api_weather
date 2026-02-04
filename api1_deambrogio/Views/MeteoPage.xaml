@@ -1,0 +1,384 @@
+﻿<Page x:Class="api1_deambrogio.Views.MeteoPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:api1_deambrogio.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="850" d:DesignWidth="1200"
+      Title="MeteoPage">
+
+    <Page.Resources>
+        <!-- Style pour les cartes météo avec effet glassmorphisme -->
+        <Style x:Key="WeatherCard" TargetType="Border">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" Opacity="0.95">
+                        <GradientStop Color="#1a1a2e" Offset="0"/>
+                        <GradientStop Color="#16213e" Offset="0.5"/>
+                        <GradientStop Color="#0f3460" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#4a90e2" Offset="0"/>
+                        <GradientStop Color="#50c878" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="CornerRadius" Value="25"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#00d4ff" BlurRadius="30" ShadowDepth="0" Opacity="0.3" Direction="270"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Style pour les titres -->
+        <Style x:Key="TitleText" TargetType="TextBlock">
+            <Setter Property="Foreground">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#00d4ff" Offset="0"/>
+                        <GradientStop Color="#50c878" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#00d4ff" BlurRadius="20" ShadowDepth="0" Opacity="0.6"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Style pour les textes normaux -->
+        <Style x:Key="NormalText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#e8f4f8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="0,3,0,3"/>
+        </Style>
+
+        <!-- Style pour les températures -->
+        <Style x:Key="TempText" TargetType="TextBlock">
+            <Setter Property="Foreground">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#ffd700" Offset="0"/>
+                        <GradientStop Color="#ffa500" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="FontSize" Value="48"/>
+            <Setter Property="FontWeight" Value="Light"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#ffd700" BlurRadius="25" ShadowDepth="0" Opacity="0.7"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Style pour les cartes des jours -->
+        <Style x:Key="DayCard" TargetType="Border">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" Opacity="0.9">
+                        <GradientStop Color="#1a1a2e" Offset="0"/>
+                        <GradientStop Color="#16213e" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#4a90e2" Offset="0"/>
+                        <GradientStop Color="#9b59b6" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="20"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Width" Value="140"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#4a90e2" BlurRadius="25" ShadowDepth="0" Opacity="0.4" Direction="270"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <!-- Fond avec gradient ultra moderne -->
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#0a0e27" Offset="0"/>
+                <GradientStop Color="#16213e" Offset="0.3"/>
+                <GradientStop Color="#0f3460" Offset="0.6"/>
+                <GradientStop Color="#0a0e27" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Effet de particules en arrière-plan -->
+        <Canvas>
+            <Ellipse Width="400" Height="400" Canvas.Left="-100" Canvas.Top="-100" Opacity="0.05">
+                <Ellipse.Fill>
+                    <RadialGradientBrush>
+                        <GradientStop Color="#00d4ff" Offset="0"/>
+                        <GradientStop Color="Transparent" Offset="1"/>
+                    </RadialGradientBrush>
+                </Ellipse.Fill>
+            </Ellipse>
+            <Ellipse Width="500" Height="500" Canvas.Right="-150" Canvas.Bottom="-150" Opacity="0.05">
+                <Ellipse.Fill>
+                    <RadialGradientBrush>
+                        <GradientStop Color="#50c878" Offset="0"/>
+                        <GradientStop Color="Transparent" Offset="1"/>
+                    </RadialGradientBrush>
+                </Ellipse.Fill>
+            </Ellipse>
+        </Canvas>
+
+        <!-- Contenu principal -->
+        <Grid Grid.Row="0" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Carte météo du jour -->
+            <Border Grid.Row="0" Style="{StaticResource WeatherCard}" Padding="35,25">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Colonne gauche - Température principale -->
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="Aujourd'hui" Style="{StaticResource TitleText}" FontSize="22"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                            <TextBlock x:Name="Température_actuelle" Text="18°" Style="{StaticResource TempText}" FontSize="64" Width="80"/>
+                            <TextBlock Text=" " FontSize="20" Foreground="#ffd700" Height="31" Width="30"/>
+                        </StackPanel>
+                        <TextBlock x:Name="Temps" Text="☁️ Nuageux" FontSize="18" Foreground="#b0c4de" Margin="0,12,0,0" FontWeight="Medium"/>
+                    </StackPanel>
+
+                    <!-- Colonne milieu - Grande image météo avec effet néon -->
+                    <Border Grid.Column="1" CornerRadius="25" Padding="25" Margin="30,0" VerticalAlignment="Center">
+                        <Border.Background>
+                            <RadialGradientBrush>
+                                <GradientStop Color="#16213e" Offset="0"/>
+                                <GradientStop Color="#0f3460" Offset="1"/>
+                            </RadialGradientBrush>
+                        </Border.Background>
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#00d4ff" Offset="0"/>
+                                <GradientStop Color="#50c878" Offset="0.5"/>
+                                <GradientStop Color="#9b59b6" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.BorderBrush>
+                        <Border.BorderThickness>2</Border.BorderThickness>
+                        <Border.Effect>
+                            <DropShadowEffect Color="#00d4ff" BlurRadius="30" ShadowDepth="0" Opacity="0.6" Direction="315"/>
+                        </Border.Effect>
+                        <Image x:Name="WeatherImageAujourdhui" Width="130" Height="130" Stretch="UniformToFill">
+                            <Image.Effect>
+                                <DropShadowEffect Color="#ffffff" BlurRadius="15" ShadowDepth="0" Opacity="0.3"/>
+                            </Image.Effect>
+                        </Image>
+                    </Border>
+
+                    <!-- Colonne droite - Détails -->
+                    <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                        <Border CornerRadius="20" Padding="20" Margin="20,0,0,0">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" Opacity="0.6">
+                                    <GradientStop Color="#1a1a2e" Offset="0"/>
+                                    <GradientStop Color="#16213e" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.BorderBrush>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#4a90e2" Offset="0"/>
+                                    <GradientStop Color="#50c878" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.BorderBrush>
+                            <Border.BorderThickness>1</Border.BorderThickness>
+                            <Border.Effect>
+                                <DropShadowEffect Color="#4a90e2" BlurRadius="20" ShadowDepth="0" Opacity="0.5" Direction="315"/>
+                            </Border.Effect>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <TextBlock Text="🌡️ Max: " Style="{StaticResource NormalText}" FontWeight="SemiBold" Foreground="#ff6b9d"/>
+                                    <TextBlock x:Name="Température_max" Text="22°C" Style="{StaticResource NormalText}" FontWeight="Bold"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <TextBlock Text="❄️ Min: " Style="{StaticResource NormalText}" FontWeight="SemiBold" Foreground="#4ecdc4"/>
+                                    <TextBlock x:Name="Température_min" Text="14°C" Style="{StaticResource NormalText}" FontWeight="Bold"/>
+                                </StackPanel>
+                                <Rectangle Height="1" Fill="#4a90e2" Opacity="0.3" Margin="0,8"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <TextBlock Text="💧 Précipitations: " Style="{StaticResource NormalText}" FontWeight="SemiBold" Foreground="#6ec9f0"/>
+                                    <TextBlock x:Name="Precipitation" Text="20%" Style="{StaticResource NormalText}" FontWeight="Bold"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <TextBlock Text="💨 Vent: " Style="{StaticResource NormalText}" FontWeight="SemiBold" Foreground="#95e1d3"/>
+                                    <TextBlock x:Name="Vent" Text="15 km/h" Style="{StaticResource NormalText}" FontWeight="Bold"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <TextBlock Text="💦 Humidité: " Style="{StaticResource NormalText}" FontWeight="SemiBold" Foreground="#a8d8ea"/>
+                                    <TextBlock x:Name="Condition" Text="65%" Style="{StaticResource NormalText}" FontWeight="Bold"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Titre prévisions avec effet néon -->
+            <TextBlock Grid.Row="1" Text="Prévisions sur 4 jours" 
+                          FontSize="20" 
+                          FontWeight="Bold" 
+                          Margin="10,25,0,15">
+                <TextBlock.Foreground>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#00d4ff" Offset="0"/>
+                        <GradientStop Color="#50c878" Offset="1"/>
+                    </LinearGradientBrush>
+                </TextBlock.Foreground>
+                <TextBlock.Effect>
+                    <DropShadowEffect Color="#00d4ff" BlurRadius="15" ShadowDepth="0" Opacity="0.6"/>
+                </TextBlock.Effect>
+            </TextBlock>
+
+            <!-- Prévisions 4 jours -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+                <!-- Jour 1 -->
+                <Border Style="{StaticResource DayCard}">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Name="Day" Text="Vendredi" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center">
+                            <TextBlock.Foreground>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="#ffd700" Offset="0"/>
+                                    <GradientStop Color="#ffa500" Offset="1"/>
+                                </LinearGradientBrush>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                        <TextBlock Name="Date" Text="16 Jan" FontSize="11" Foreground="#b0c4de" HorizontalAlignment="Center" Margin="0,2,0,8"/>
+                        <Border CornerRadius="12" Padding="8" Background="#16213e" Margin="0,0,0,8">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#4a90e2" BlurRadius="10" ShadowDepth="0" Opacity="0.4"/>
+                            </Border.Effect>
+                            <Image Name="Icon" Width="40" Height="40" HorizontalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Name="Temp" Text="Ensoleillé" FontSize="11" Foreground="#d4e1f0" HorizontalAlignment="Center" Margin="0,0,0,8" FontWeight="Medium"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Name="temp_max" Text="20°" FontSize="22" FontWeight="Bold" Foreground="#ff6b9d"/>
+                            <TextBlock Name="temp_min" Text=" / 12°" FontSize="15" Foreground="#4ecdc4" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+                        </StackPanel>
+                        <TextBlock Name="precipitation" Text="💧 10%" FontSize="10" Foreground="#6ec9f0" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Jour 2 -->
+                <Border Style="{StaticResource DayCard}">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Name="DAY" Text="Vendredi" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center">
+                            <TextBlock.Foreground>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="#ffd700" Offset="0"/>
+                                    <GradientStop Color="#ffa500" Offset="1"/>
+                                </LinearGradientBrush>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                        <TextBlock Name="DATE" Text="16 Jan" FontSize="11" Foreground="#b0c4de" HorizontalAlignment="Center" Margin="0,2,0,8"/>
+                        <Border CornerRadius="12" Padding="8" Background="#16213e" Margin="0,0,0,8">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#4a90e2" BlurRadius="10" ShadowDepth="0" Opacity="0.4"/>
+                            </Border.Effect>
+                            <Image Name="ICON" Width="40" Height="40" HorizontalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Name="TEMP" Text="Ensoleillé" FontSize="11" Foreground="#d4e1f0" HorizontalAlignment="Center" Margin="0,0,0,8" FontWeight="Medium"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Name="Temp_max" Text="20°" FontSize="22" FontWeight="Bold" Foreground="#ff6b9d"/>
+                            <TextBlock Name="Temp_min" Text=" / 12°" FontSize="15" Foreground="#4ecdc4" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+                        </StackPanel>
+                        <TextBlock Name="Précipitation" Text="💧 10%" FontSize="10" Foreground="#6ec9f0" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Jour 3 -->
+                <Border Style="{StaticResource DayCard}">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Name="jour" Text="Vendredi" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center">
+                            <TextBlock.Foreground>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="#ffd700" Offset="0"/>
+                                    <GradientStop Color="#ffa500" Offset="1"/>
+                                </LinearGradientBrush>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                        <TextBlock Name="dates" Text="16 Jan" FontSize="11" Foreground="#b0c4de" HorizontalAlignment="Center" Margin="0,2,0,8"/>
+                        <Border CornerRadius="12" Padding="8" Background="#16213e" Margin="0,0,0,8">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#4a90e2" BlurRadius="10" ShadowDepth="0" Opacity="0.4"/>
+                            </Border.Effect>
+                            <Image Name="Icons" Width="40" Height="40" HorizontalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Name="temperature" Text="Ensoleillé" FontSize="11" Foreground="#d4e1f0" HorizontalAlignment="Center" Margin="0,0,0,8" FontWeight="Medium"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Name="TEMP_max" Text="20°" FontSize="22" FontWeight="Bold" Foreground="#ff6b9d"/>
+                            <TextBlock Name="TEMP_min" Text=" / 12°" FontSize="15" Foreground="#4ecdc4" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+                        </StackPanel>
+                        <TextBlock Name="Precip" Text="💧 10%" FontSize="10" Foreground="#6ec9f0" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Jour 4 -->
+                <Border Style="{StaticResource DayCard}">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Name="Jour" Text="Vendredi" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center">
+                            <TextBlock.Foreground>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="#ffd700" Offset="0"/>
+                                    <GradientStop Color="#ffa500" Offset="1"/>
+                                </LinearGradientBrush>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                        <TextBlock Name="date" Text="16 Jan" FontSize="11" Foreground="#b0c4de" HorizontalAlignment="Center" Margin="0,2,0,8"/>
+                        <Border CornerRadius="12" Padding="8" Background="#16213e" Margin="0,0,0,8">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#4a90e2" BlurRadius="10" ShadowDepth="0" Opacity="0.4"/>
+                            </Border.Effect>
+                            <Image Name="Images" Width="40" Height="40" HorizontalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Name="Tempé" Text="Ensoleillé" FontSize="11" Foreground="#d4e1f0" HorizontalAlignment="Center" Margin="0,0,0,8" FontWeight="Medium"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Name="tempé_max" Text="20°" FontSize="22" FontWeight="Bold" Foreground="#ff6b9d"/>
+                            <TextBlock Name="tempé_min" Text=" / 12°" FontSize="15" Foreground="#4ecdc4" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+                        </StackPanel>
+                        <TextBlock Name="précipitation" Text="💧 10%" FontSize="10" Foreground="#6ec9f0" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>
